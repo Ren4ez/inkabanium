@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DSANC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -14,326 +18,479 @@
             height: 100vh;
             overflow: hidden;
             cursor: none;
-            user-select: none;
         }
 
         /* 🔵 Курсор */
         .cursor-dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            pointer-events: none;
+            position: fixed; width: 8px; height: 8px; background: #fff; border-radius: 50%;
+            transform: translate(-50%, -50%); z-index: 9999; pointer-events: none;
             box-shadow: 0 0 15px rgba(255,255,255,0.9), 0 0 30px rgba(255,255,255,0.4);
         }
-
         .cursor-ring {
-            position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9998;
-            pointer-events: none;
+            position: fixed; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%; transform: translate(-50%, -50%); z-index: 9998; pointer-events: none;
             transition: width 0.1s, height 0.1s, border-color 0.1s;
         }
 
-        /* 🎬 Интро */
-        .intro {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+        /* 🎬 Главный контейнер - ЦЕНТР */
+        .main-container {
+            position: absolute; 
+            inset: 0; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            gap: 25px;  /* ССЫЛКИ БЛИЖЕ К DSANC */
             z-index: 100;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
-        .intro.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .main-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
+        /* 🖤 DSANC с шрифтом и RGB - БОЛЬШЕ */
         .text-wrapper {
-            display: flex;
-            font-size: clamp(3rem, 12vw, 7rem);
-            font-weight: 200;
-            letter-spacing: 0.12em;
-        }
-
-        .letter {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(35px);
-            animation: fadeSlideUp 0.85s cubic-bezier(0.23,1,0.32,1) forwards;
-        }
-        .letter:nth-child(1) { animation-delay: 0.1s; }
-        .letter:nth-child(2) { animation-delay: 0.2s; }
-        .letter:nth-child(3) { animation-delay: 0.3s; }
-        .letter:nth-child(4) { animation-delay: 0.4s; }
-        .letter:nth-child(5) { animation-delay: 0.5s; }
-
-        @keyframes fadeSlideUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .letter:hover { color: #b0b0b0; transition: color 0.2s ease; }
-
-        /* 🟣 Подсказка */
-        .click-hint {
-            position: absolute;
-            bottom: 20%;
-            font-size: 0.9rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.25);
-            opacity: 0;
-            animation: hintPulse 2s ease-in-out infinite;
-            pointer-events: none;
-        }
-        .click-hint.show { opacity: 1; }
-        @keyframes hintPulse {
-            0%, 100% { opacity: 0.15; }
-            50% { opacity: 0.45; }
-        }
-
-        /* ⚙️ Кнопка настроек */
-        .settings-toggle {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 60;
-            opacity: 0;
-            pointer-events: auto;
-            transition: opacity 0.4s ease, background 0.2s;
-        }
-        .settings-toggle.show { opacity: 1; }
-        .settings-toggle:hover { background: rgba(255,255,255,0.18); }
-        .settings-toggle svg {
-            width: 18px;
-            height: 18px;
-            fill: rgba(255,255,255,0.7);
+            display: flex; 
+            font-size: clamp(4rem, 15vw, 10rem);  /* УВЕЛИЧИЛ DSANC */
+            font-weight: 700;
+            letter-spacing: 0.08em; 
+            cursor: none; 
             transition: transform 0.3s ease;
         }
-        .settings-toggle.active svg { transform: rotate(180deg); }
+        .text-wrapper:hover { transform: scale(1.02); }
 
-        /* ⚙️ Панель настроек */
-        .settings-panel {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 18px 28px;
-            z-index: 50;
-            display: flex;
-            gap: 32px;
-            align-items: center;
-            transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), opacity 0.4s ease;
+        .letter {
+            display: inline-block; 
+            opacity: 0; 
+            transform: translateY(35px);
+            font-family: 'Cinzel Decorative', serif;
+            background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #00ffff, #0088ff, #ff00ff, #ff0000);
+            background-size: 400% 100%; 
+            -webkit-background-clip: text; 
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeSlideUp 0.85s cubic-bezier(0.23,1,0.32,1) forwards, rgbFlow 4s linear infinite;
+            animation-delay: var(--delay), var(--delay);
+            filter: drop-shadow(0 0 12px rgba(255,255,255,0.5));
+        }
+        .letter:nth-child(1) { --delay: 0.1s; }
+        .letter:nth-child(2) { --delay: 0.2s; }
+        .letter:nth-child(3) { --delay: 0.3s; }
+        .letter:nth-child(4) { --delay: 0.4s; }
+        .letter:nth-child(5) { --delay: 0.5s; }
+
+        @keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes rgbFlow { 0% { background-position: 0% 50%; } 100% { background-position: 400% 50%; } }
+
+        /* 🔗 Социальные ссылки - ЦЕНТР */
+        .social-links { 
+            display: flex; 
+            gap: 25px; 
+            opacity: 0; 
+            animation: fadeIn 1s ease 0.8s forwards;
+            justify-content: center;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .social-link {
+            width: 60px; 
+            height: 60px; 
+            border: 2px solid rgba(255,255,255,0.25); 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.3s ease;
+            cursor: none; 
+            text-decoration: none; 
+            position: relative;
+        }
+        .social-link:hover {
+            border-color: rgba(255,255,255,0.9); 
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.25);
+        }
+        .social-link svg { 
+            width: 28px; 
+            height: 28px; 
+            fill: rgba(255,255,255,0.85); 
+            transition: fill 0.3s; 
+        }
+        .social-link:hover svg { fill: #fff; }
+        .social-link.youtube:hover { 
+            border-color: #ff0000; 
+            box-shadow: 0 8px 25px rgba(255,0,0,0.4); 
+        }
+        .social-link.discord:hover { 
+            border-color: #5865F2; 
+            box-shadow: 0 8px 25px rgba(88,101,242,0.4); 
+        }
+
+        .tooltip {
+            position: absolute; 
+            bottom: -30px; 
+            font-size: 0.7rem; 
+            letter-spacing: 0.15em;
+            text-transform: uppercase; 
+            color: rgba(255,255,255,0.5); 
             opacity: 0;
-            pointer-events: auto;
+            transform: translateY(-10px); 
+            transition: all 0.3s ease; 
+            pointer-events: none; 
+            white-space: nowrap;
         }
-        .settings-panel.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
+        .social-link:hover .tooltip { opacity: 1; transform: translateY(0); }
 
-        .setting-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
+        /* 🎮 DVD Bouncing Animation - BACKGROUND */
+        .dvd-bounce {
+            position: fixed;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0;
+            z-index: 0;
+            pointer-events: none;
+            white-space: pre;
+            line-height: 1.2;
+            transition: color 0.3s, text-shadow 0.3s;
+            opacity: 0.7;
         }
-        .setting-label {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.45);
-        }
-        .setting-value {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.85);
-            font-weight: 300;
-            min-width: 40px;
-            text-align: center;
-        }
+        .dvd-bounce.color-1 { color: #0f0; text-shadow: 0 0 10px #0f0, 0 0 20px #0f0; }
+        .dvd-bounce.color-2 { color: #0ff; text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+        .dvd-bounce.color-3 { color: #f0f; text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+        .dvd-bounce.color-4 { color: #ff0; text-shadow: 0 0 10px #ff0, 0 0 20px #ff0; }
+        .dvd-bounce.color-5 { color: #f00; text-shadow: 0 0 10px #f00, 0 0 20px #f00; }
+        .dvd-bounce.color-6 { color: #00f; text-shadow: 0 0 10px #00f, 0 0 20px #00f; }
 
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 120px;
-            height: 3px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 4px;
-            outline: none;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #fff;
-            box-shadow: 0 0 8px rgba(255,255,255,0.5);
-        }
-        input[type="range"]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #fff;
-            border: none;
-            box-shadow: 0 0 8px rgba(255,255,255,0.5);
-        }
-
-        /* 🟢 Osu-контейнер */
-        .osu-container {
+        /* 🧮 Калькулятор медалей - ЦЕНТР */
+        .calculator-container {
             position: fixed;
             inset: 0;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        /* 🔴 КРУГ С НОМЕРОМ как в osu! */
-        .osu-circle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: auto;
-            cursor: none;
-            /* Двойная обводка */
-            box-shadow: 
-                0 0 0 3px rgba(0,0,0,0.8),
-                0 0 0 5px rgba(255,255,255,0.9),
-                0 0 20px rgba(255,255,255,0.4);
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1000;
             opacity: 0;
-            animation: circleAppear 0.4s ease-out forwards;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        .calculator-container.show {
+            opacity: 1;
+            visibility: visible;
         }
 
-        @keyframes circleAppear {
-            0% { opacity: 0; transform: scale(0.3); }
-            50% { opacity: 1; transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
+        .calc-wrapper {
+            background: rgba(20,20,20,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1001;
         }
 
-        /* Номер внутри круга */
-        .circle-number {
+        .calc-title {
             font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 
-                0 0 10px rgba(255,255,255,0.8),
-                0 0 20px rgba(255,255,255,0.4);
-            pointer-events: none;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 20px;
             letter-spacing: 0.05em;
         }
 
-        /* Подходной круг (approach circle) */
-        .approach-circle {
+        .section-title {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            margin: 18px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .medal-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        .medal-option {
+            position: relative;
+        }
+        .medal-option input {
             position: absolute;
-            border: 3px solid rgba(255,255,255,0.7);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(2.5);
             opacity: 0;
             pointer-events: none;
-            animation: approachAnim var(--approach-time) ease-out forwards;
         }
-
-        @keyframes approachAnim {
-            0% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
-            30% { opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .medal-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            aspect-ratio: 1;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.02);
         }
-
-        /* 💥 Эффект попадания */
-        .hit-effect {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .medal-option label img {
+            width: 75%;
+            height: 75%;
+            object-fit: contain;
         }
-        .hit-effect::before {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255,255,255,0.9);
-            animation: hitCheck 0.3s ease-out forwards;
-        }
-        @keyframes hitCheck {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
-        }
-
-        /* Класс для анимации исчезновения при клике */
-        .osu-circle.hit {
-            animation: circleHit 0.15s ease-out forwards !important;
-        }
-        @keyframes circleHit {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.3); opacity: 0; }
-        }
-
-        /* ✨ Combo counter */
-        .combo {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
+        .medal-option label.none-label {
+            font-size: 1.8rem;
             font-weight: 300;
-            letter-spacing: 0.1em;
             color: rgba(255,255,255,0.6);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
         }
-        .combo.show { opacity: 1; }
-        .combo.bump {
-            animation: comboBump 0.15s ease-out;
+        .medal-option input:checked + label {
+            border-color: transparent;
+            background: rgba(255,255,255,0.06);
         }
-        @keyframes comboBump {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.3); color: rgba(255,255,255,1); }
-            100% { transform: translateX(-50%) scale(1); }
+        /* 🔥 МЕДЛЕННЫЙ RGB ДЛЯ КРЕСТИКА */
+        .medal-option input#curr-0:checked + label.none-label {
+            animation: slowRgb 10s linear infinite;
+        }
+        @keyframes slowRgb {
+            0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; color: #ff6666; }
+            16% { text-shadow: 0 0 10px #ff8800, 0 0 20px #ff8800; color: #ffaa66; }
+            33% { text-shadow: 0 0 10px #ffff00, 0 0 20px #ffff00; color: #ffff66; }
+            50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; color: #66ff66; }
+            66% { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; color: #66ffff; }
+            83% { text-shadow: 0 0 10px #0088ff, 0 0 20px #0088ff; color: #66aaff; }
+            100% { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; color: #ff66ff; }
+        }
+        .medal-option label:hover {
+            border-color: rgba(255,255,255,0.35);
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.04);
         }
 
-        /* Flash */
-        .flash {
-            position: fixed;
-            inset: 0;
-            background: rgba(255,255,255,0.15);
-            z-index: 200;
-            pointer-events: none;
-            opacity: 0;
-            animation: flashAnim 0.5s ease-out forwards;
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin: 18px 0;
         }
-        @keyframes flashAnim {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .input-field label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+        }
+        .input-field input {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .input-field input:focus {
+            border-color: rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.08);
+        }
+        .input-field input[type="date"] {
+            padding: 9px 12px;
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .checkbox-field input {
+            width: 16px;
+            height: 16px;
+            accent-color: #fff;
+        }
+        .checkbox-field label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.75);
+            cursor: pointer;
+        }
+
+        .calc-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 22px 0 14px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .btn-calc {
+            background: #fff;
+            color: #0a0a0a;
+        }
+        .btn-calc:hover {
+            background: rgba(255,255,255,0.92);
+            transform: translateY(-2px);
+        }
+        .btn-reset {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-reset:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .results {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 10px;
+            display: none;
+        }
+        .results.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        .result-row .value {
+            font-weight: 600;
+            color: #fff;
+        }
+        .result-row.highlight {
+            color: #4ade80;
+            font-weight: 600;
+            padding-top: 12px;
+            margin-top: 4px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .error {
+            color: #f87171;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            display: none;
+        }
+        .error.show { display: block; }
+
+        .flash {
+            position: fixed; inset: 0; background: rgba(255,255,255,0.2); z-index: 2000;
+            pointer-events: none; opacity: 0; animation: flashAnim 0.4s ease-out forwards;
+        }
+        @keyframes flashAnim { 0% { opacity: 1; } 100% { opacity: 0; } }
+
+        /* ➕ КНОПКА ДОБАВЛЕНИЯ С ПОСТОЯННЫМ ТУСКЛЫМ RGB */
+        .add-dvd-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 3px solid rgba(255,255,255,0.3);
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 9997;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.1);
+            overflow: hidden;
+            /* ПОСТОЯННЫЙ ТУСКЛЫЙ RGB ФОН */
+            animation: dimRgb 8s linear infinite;
+        }
+        
+        @keyframes dimRgb {
+            0% { border-color: rgba(255,100,100,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,100,100,0.2); }
+            16% { border-color: rgba(255,180,100,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,180,100,0.2); }
+            33% { border-color: rgba(255,255,100,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,100,0.2); }
+            50% { border-color: rgba(100,255,100,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(100,255,100,0.2); }
+            66% { border-color: rgba(100,220,255,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(100,220,255,0.2); }
+            83% { border-color: rgba(140,100,255,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(140,100,255,0.2); }
+            100% { border-color: rgba(255,100,200,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,100,200,0.2); }
+        }
+        
+        .add-dvd-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .add-dvd-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .add-dvd-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6), inset 0 0 30px rgba(255,255,255,0.2);
+        }
+        
+        .add-dvd-btn:active {
+            transform: translateY(-1px) scale(0.95);
+        }
+        
+        .add-dvd-btn span {
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        .add-dvd-btn:hover span {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 640px) {
+            .medal-row {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            .input-grid { grid-template-columns: 1fr; }
+            .calc-wrapper { padding: 20px 16px; }
+            .dvd-bounce { font-size: 12px; }
+            .add-dvd-btn { width: 50px; height: 50px; font-size: 28px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -342,224 +499,381 @@
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-ring" id="cursor-ring"></div>
 
-    <div class="intro" id="intro">
+    <!-- 🔊 Кастомный звук -->
+    <audio id="my-sound" src="click.mp3" preload="auto"></audio>
+
+    <!-- 🎮 DVD Bouncing Animation Container -->
+    <div id="dvd-container"></div>
+
+    <!-- ➕ КНОПКА ДОБАВЛЕНИЯ -->
+    <button class="add-dvd-btn" id="addDvdBtn">
+        <span>+</span>
+    </button>
+
+    <!-- 🎬 DSANC и ссылки - ЦЕНТР -->
+    <div class="main-container" id="main-container">
         <div class="text-wrapper" id="text-wrapper">
-            <span class="letter">D</span><span class="letter">S</span><span class="letter">A</span><span class="letter">N</span><span class="letter">C</span>
+            <span class="letter">D</span>
+            <span class="letter">S</span>
+            <span class="letter">A</span>
+            <span class="letter">N</span>
+            <span class="letter">C</span>
         </div>
-        <div class="click-hint" id="click-hint">нажми</div>
+
+        <!-- 🔗 Социальные ссылки - только YouTube и Discord -->
+        <div class="social-links">
+            <a href="https://youtube.com/@hif" target="_blank" class="social-link youtube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span class="tooltip">YouTube</span>
+            </a>
+            <a href="https://discord.com/users/568771962881572864" target="_blank" class="social-link discord">
+                <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418z"/></svg>
+                <span class="tooltip">Discord</span>
+            </a>
+        </div>
     </div>
 
-    <div class="osu-container" id="osu-container"></div>
-    <div class="combo" id="combo">combo x0</div>
+    <!-- 🧮 Калькулятор медалей -->
+    <div class="calculator-container" id="calculator">
+        <div class="calc-wrapper">
+            <h2 class="calc-title">CS2 Калькулятор</h2>
 
-    <div class="settings-toggle" id="settings-toggle">
-        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-    </div>
+            <div class="section-title">Current Medal</div>
+            <div class="medal-row">
+                <div class="medal-option">
+                    <input type="radio" id="curr-0" name="current" value="0" checked>
+                    <label for="curr-0" class="none-label">✕</label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="curr-1" name="current" value="1">
+                    <label for="curr-1"><img src="https://static.wikia.nocookie.net/cswikia/images/f/f3/Service_medal_2026_lvl1.png/revision/latest?cb=20260123173658" alt="T1"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="curr-2" name="current" value="2">
+                    <label for="curr-2"><img src="https://static.wikia.nocookie.net/cswikia/images/4/41/Service_medal_2026_lvl2.png/revision/latest?cb=20260123173716" alt="T2"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="curr-3" name="current" value="3">
+                    <label for="curr-3"><img src="https://static.wikia.nocookie.net/cswikia/images/c/c4/Service_medal_2026_lvl3.png/revision/latest?cb=20260123173722" alt="T3"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="curr-4" name="current" value="4">
+                    <label for="curr-4"><img src="https://static.wikia.nocookie.net/cswikia/images/5/57/Service_medal_2026_lvl4.png/revision/latest?cb=20260123173730" alt="T4"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="curr-5" name="current" value="5">
+                    <label for="curr-5"><img src="https://static.wikia.nocookie.net/cswikia/images/c/c6/Service_medal_2026_lvl5.png/revision/latest?cb=20260123173737" alt="T5"></label>
+                </div>
+            </div>
 
-    <div class="settings-panel" id="settings-panel">
-        <div class="setting-group">
-            <span class="setting-label">Скорость</span>
-            <input type="range" id="speed-slider" min="20" max="400" value="100">
-            <span class="setting-value" id="speed-value">100</span>
-        </div>
-        <div class="setting-group">
-            <span class="setting-label">Размер</span>
-            <input type="range" id="size-slider" min="8" max="60" value="25">
-            <span class="setting-value" id="size-value">25</span>
+            <div class="section-title">Target Medal</div>
+            <div class="medal-row">
+                <div class="medal-option">
+                    <input type="radio" id="targ-1" name="target" value="1" checked>
+                    <label for="targ-1"><img src="https://static.wikia.nocookie.net/cswikia/images/f/f3/Service_medal_2026_lvl1.png/revision/latest?cb=20260123173658" alt="T1"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="targ-2" name="target" value="2">
+                    <label for="targ-2"><img src="https://static.wikia.nocookie.net/cswikia/images/4/41/Service_medal_2026_lvl2.png/revision/latest?cb=20260123173716" alt="T2"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="targ-3" name="target" value="3">
+                    <label for="targ-3"><img src="https://static.wikia.nocookie.net/cswikia/images/c/c4/Service_medal_2026_lvl3.png/revision/latest?cb=20260123173722" alt="T3"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="targ-4" name="target" value="4">
+                    <label for="targ-4"><img src="https://static.wikia.nocookie.net/cswikia/images/5/57/Service_medal_2026_lvl4.png/revision/latest?cb=20260123173730" alt="T4"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="targ-5" name="target" value="5">
+                    <label for="targ-5"><img src="https://static.wikia.nocookie.net/cswikia/images/c/c6/Service_medal_2026_lvl5.png/revision/latest?cb=20260123173737" alt="T5"></label>
+                </div>
+                <div class="medal-option">
+                    <input type="radio" id="targ-6" name="target" value="6">
+                    <label for="targ-6"><img src="https://static.wikia.nocookie.net/cswikia/images/b/b6/Service_medal_2026_lvl6.png/revision/latest?cb=20260123173743" alt="T6"></label>
+                </div>
+            </div>
+
+            <div class="section-title">Your Progress</div>
+            <div class="input-grid">
+                <div class="input-field">
+                    <label for="startLevel">Current Level</label>
+                    <input type="number" id="startLevel" min="1" max="40" value="1">
+                </div>
+                <div class="input-field">
+                    <label for="startXP">Current XP</label>
+                    <input type="number" id="startXP" min="0" max="4999" value="0">
+                </div>
+                <div class="input-field">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" id="startDate">
+                </div>
+                <div class="input-field">
+                    <label for="endDate">End Date</label>
+                    <input type="date" id="endDate">
+                    <div class="error" id="err-date"></div>
+                </div>
+                <div class="input-field">
+                    <label for="avgDM">Avg DM Score</label>
+                    <input type="number" id="avgDM" min="1" value="600">
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="useDM" checked>
+                        <label for="useDM">Include DM XP</label>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label for="avgMission">Avg Mission XP/Week</label>
+                    <input type="number" id="avgMission" min="0" value="450">
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="useMission" checked>
+                        <label for="useMission">Include Missions</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-buttons">
+                <button class="btn btn-calc" onclick="calculateMedal()">Calculate</button>
+                <button class="btn btn-reset" onclick="closeCalculator()">Close</button>
+            </div>
+
+            <div class="results" id="results">
+                <div class="result-row"><span>Total XP Needed:</span><span class="value" id="res-total">0</span></div>
+                <div class="result-row"><span>Weekly Reduced XP:</span><span class="value" id="res-reduced">0</span></div>
+                <div class="result-row"><span>Daily XP Needed:</span><span class="value" id="res-daily">0</span></div>
+                <div class="result-row"><span>Daily Playtime:</span><span class="value" id="res-time">0 min</span></div>
+                <div class="result-row highlight"><span>Target Date:</span><span class="value" id="res-date">-</span></div>
+            </div>
         </div>
     </div>
 
     <script>
-        const cursorDot      = document.getElementById('cursor-dot');
-        const cursorRing     = document.getElementById('cursor-ring');
-        const intro          = document.getElementById('intro');
-        const textWrapper    = document.getElementById('text-wrapper');
-        const clickHint      = document.getElementById('click-hint');
-        const osuContainer   = document.getElementById('osu-container');
-        const settingsToggle = document.getElementById('settings-toggle');
-        const settingsPanel  = document.getElementById('settings-panel');
-        const speedSlider    = document.getElementById('speed-slider');
-        const sizeSlider     = document.getElementById('size-slider');
-        const speedValue     = document.getElementById('speed-value');
-        const sizeValue      = document.getElementById('size-value');
-        const comboEl        = document.getElementById('combo');
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        const mainContainer = document.getElementById('main-container');
+        const textWrapper = document.getElementById('text-wrapper');
+        const calculator = document.getElementById('calculator');
+        const dvdContainer = document.getElementById('dvd-container');
+        const addDvdBtn = document.getElementById('addDvdBtn');
 
-        let activeDots = 0, started = false, spawnInterval = null;
-        let baseSize = 25, baseSpeed = 100, settingsVisible = false;
-        let combo = 0, circleCounter = 1;
+        // 🔥 ОРИГИНАЛЬНЫЕ СМАЙЛИКИ
+        const dvdFrames = [
+            '(\\^·^)\\',
+            '/(^·^)\\',
+            '/(^·^/)',
+            '(\\^·^)\\',
+            '(/^·^)/',
+            '\\(^·^)/',
+            '\\(^·^\\)',
+            '(/^·^)/'
+        ];
+        
+        const dvdAnimations = [];
 
-        /* ——— Курсор ——— */
-        document.addEventListener('mousemove', e => {
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top  = e.clientY + 'px';
-            setTimeout(() => {
-                cursorRing.style.left = e.clientX + 'px';
-                cursorRing.style.top  = e.clientY + 'px';
-            }, 8);
+        class DVDAnimation {
+            constructor() {
+                this.element = document.createElement('div');
+                this.element.className = 'dvd-bounce color-' + (Math.floor(Math.random() * 6) + 1);
+                this.element.textContent = dvdFrames[0];
+                dvdContainer.appendChild(this.element);
+                
+                this.x = Math.random() * (window.innerWidth - 100);
+                this.y = Math.random() * (window.innerHeight - 100);
+                this.speedX = (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1);
+                this.speedY = (Math.random() * 1.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1);
+                this.frameIndex = 0;
+                this.colorIndex = Math.floor(Math.random() * 6) + 1;
+                
+                this.updatePosition();
+                this.startAnimation();
+                this.startFrameCycle();
+            }
+            
+            updatePosition() {
+                const rect = this.element.getBoundingClientRect();
+                const maxX = window.innerWidth - rect.width;
+                const maxY = window.innerHeight - rect.height;
+                
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x <= 0 || this.x >= maxX) {
+                    this.speedX = -this.speedX;
+                    this.x = Math.max(0, Math.min(this.x, maxX));
+                    this.changeColor();
+                }
+                if (this.y <= 0 || this.y >= maxY) {
+                    this.speedY = -this.speedY;
+                    this.y = Math.max(0, Math.min(this.y, maxY));
+                    this.changeColor();
+                }
+                
+                this.element.style.left = this.x + 'px';
+                this.element.style.top = this.y + 'px';
+            }
+            
+            changeColor() {
+                this.colorIndex = (this.colorIndex % 6) + 1;
+                this.element.className = 'dvd-bounce color-' + this.colorIndex;
+            }
+            
+            startAnimation() {
+                const animate = () => {
+                    this.updatePosition();
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+            
+            startFrameCycle() {
+                const cycle = () => {
+                    this.frameIndex = (this.frameIndex + 1) % dvdFrames.length;
+                    this.element.textContent = dvdFrames[this.frameIndex];
+                    setTimeout(cycle, 150);
+                };
+                cycle();
+            }
+            
+            remove() {
+                this.element.remove();
+            }
+        }
+
+        dvdAnimations.push(new DVDAnimation());
+
+        // Кнопка добавления
+        addDvdBtn.addEventListener('click', () => {
+            playClickSound();
+            dvdAnimations.push(new DVDAnimation());
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const endOfYear = new Date(today.getFullYear(), 11, 31);
+            
+            const formatDate = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+            
+            document.getElementById('startDate').value = formatDate(today);
+            document.getElementById('endDate').value = formatDate(endOfYear);
+        });
+
+        const medalXP = [0, 45000, 105000, 180000, 270000, 375000, 500000];
+
+        function playClickSound() {
+            const sound = document.getElementById('my-sound');
+            sound.currentTime = 0;
+            sound.play().catch(e => console.log('Audio error:', e));
+        }
+
+        document.addEventListener('mousemove', e => {
+            cursorDot.style.left = e.clientX + 'px'; 
+            cursorDot.style.top = e.clientY + 'px';
+            setTimeout(() => { 
+                cursorRing.style.left = e.clientX + 'px'; 
+                cursorRing.style.top = e.clientY + 'px'; 
+            }, 8);
+        });
         document.addEventListener('mousedown', () => {
             cursorDot.style.width = '6px'; cursorDot.style.height = '6px';
-            cursorRing.style.width = '24px'; cursorRing.style.height = '24px';
+            cursorRing.style.width = '24px'; cursorRing.style.height = '24px'; 
             cursorRing.style.borderColor = 'rgba(255,255,255,0.85)';
         });
         document.addEventListener('mouseup', () => {
             cursorDot.style.width = '8px'; cursorDot.style.height = '8px';
-            cursorRing.style.width = '30px'; cursorRing.style.height = '30px';
+            cursorRing.style.width = '30px'; cursorRing.style.height = '30px'; 
             cursorRing.style.borderColor = 'rgba(255,255,255,0.3)';
         });
 
-        /* ——— Клик по DSANC ——— */
-        textWrapper.addEventListener('click', startOsuScene, { once: true });
-
-        function startOsuScene() {
-            if (started) return;
-            started = true;
-
-            const flash = document.createElement('div');
-            flash.className = 'flash';
+        textWrapper.addEventListener('click', () => {
+            playClickSound();
+            const flash = document.createElement('div'); 
+            flash.className = 'flash'; 
             document.body.appendChild(flash);
-            setTimeout(() => flash.remove(), 500);
-
-            setTimeout(() => intro.classList.add('hidden'), 80);
-
+            setTimeout(() => flash.remove(), 400);
+            mainContainer.classList.add('hidden');
             setTimeout(() => {
-                settingsToggle.classList.add('show');
-                settingsPanel.classList.add('show');
-                settingsVisible = true;
-                settingsToggle.classList.add('active');
-            }, 350);
-
-            setTimeout(() => {
-                spawnInterval = setInterval(createOsuCircle, baseSpeed);
-                for (let i = 0; i < 10; i++) setTimeout(createOsuCircle, i * 70);
-            }, 250);
-        }
-
-        setTimeout(() => clickHint.classList.add('show'), 1300);
-
-        /* ——— Toggle настроек ——— */
-        settingsToggle.addEventListener('click', () => {
-            settingsVisible = !settingsVisible;
-            if (settingsVisible) {
-                settingsPanel.classList.add('show');
-                settingsToggle.classList.add('active');
-            } else {
-                settingsPanel.classList.remove('show');
-                settingsToggle.classList.remove('active');
-            }
+                calculator.classList.add('show');
+            }, 300);
         });
 
-        /* ——— Создание круга как в osu! ——— */
-        function createOsuCircle() {
-            if (activeDots > 150) return;
+        function closeCalculator() {
+            calculator.classList.remove('show');
+            document.getElementById('results').classList.remove('show');
+            mainContainer.classList.remove('hidden');
+        }
 
-            const circle = document.createElement('div');
-            circle.className = 'osu-circle';
+        function calculateMedal() {
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
 
-            const size = Math.random() * baseSize + 50; // 50-110px
-            circle.style.width = size + 'px';
-            circle.style.height = size + 'px';
+            const currMedal = parseInt(document.querySelector('input[name="current"]:checked').value);
+            const targetMedal = parseInt(document.querySelector('input[name="target"]:checked').value);
+            const startLevel = parseInt(document.getElementById('startLevel').value) || 1;
+            const startXP = parseInt(document.getElementById('startXP').value) || 0;
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+            const avgDM = parseInt(document.getElementById('avgDM').value) || 600;
+            const avgMission = parseInt(document.getElementById('avgMission').value) || 450;
+            const useDM = document.getElementById('useDM').checked;
+            const useMission = document.getElementById('useMission').checked;
 
-            const x = Math.random() * 80 + 10; // 10-90%
-            const y = Math.random() * 70 + 15; // 15-85%
-            circle.style.left = x + '%';
-            circle.style.top = y + '%';
-
-            // Номер
-            const number = document.createElement('span');
-            number.className = 'circle-number';
-            number.textContent = circleCounter++;
-            circle.appendChild(number);
-
-            // Подходной круг (approach circle)
-            const approach = document.createElement('div');
-            approach.className = 'approach-circle';
-            approach.style.width = size + 'px';
-            approach.style.height = size + 'px';
-            const approachTime = 1.5 + Math.random(); // 1.5-2.5 сек
-            approach.style.setProperty('--approach-time', approachTime + 's');
-            circle.appendChild(approach);
-
-            // Цветные круги (иногда)
-            if (Math.random() > 0.8) {
-                const hue = 190 + Math.random() * 50; // голубой/синий
-                circle.style.boxShadow = `
-                    0 0 0 3px rgba(0,0,0,0.8),
-                    0 0 0 5px hsla(${hue}, 90%, 70%, 0.95),
-                    0 0 25px hsla(${hue}, 90%, 60%, 0.6)
-                `;
-                approach.style.borderColor = `hsla(${hue}, 90%, 80%, 0.8)`;
+            let valid = true;
+            if (endDate <= startDate) {
+                document.getElementById('err-date').textContent = 'End > Start';
+                document.getElementById('err-date').classList.add('show');
+                valid = false;
             }
+            if (targetMedal <= currMedal) {
+                alert('Target must be higher than current!');
+                valid = false;
+            }
+            if (!valid) return;
 
-            // 💥 КЛИК по кругу
-            circle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                hitCircle(circle);
+            const currentTotalXP = (startLevel - 1) * 5000 + startXP + medalXP[currMedal];
+            const targetTotalXP = medalXP[targetMedal];
+            const xpNeeded = Math.max(0, targetTotalXP - currentTotalXP);
+
+            const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+            const weeks = Math.ceil(days / 7);
+            const baseWeeklyXP = 12000;
+            const reducedXP = Math.max(0, baseWeeklyXP * 0.3 * weeks);
+
+            const effectiveXP = xpNeeded + reducedXP;
+            const dailyXP = Math.ceil(effectiveXP / days);
+
+            const xpPerMin = useDM ? (avgDM / 10) : 30;
+            const missionBonus = useMission ? avgMission / 7 : 0;
+            const netDailyXP = Math.max(1, dailyXP - missionBonus);
+            const minutesPerDay = Math.ceil(netDailyXP / xpPerMin);
+
+            let timeStr = '';
+            if (minutesPerDay < 60) timeStr = `${minutesPerDay} min/day`;
+            else if (minutesPerDay < 120) timeStr = `${(minutesPerDay/60).toFixed(1)} h/day`;
+            else timeStr = `${Math.floor(minutesPerDay/60)}h ${minutesPerDay%60}m/day`;
+
+            const targetDate = new Date(startDate);
+            targetDate.setDate(targetDate.getDate() + days);
+            const dateStr = targetDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            document.getElementById('res-total').textContent = xpNeeded.toLocaleString();
+            document.getElementById('res-reduced').textContent = Math.round(reducedXP).toLocaleString();
+            document.getElementById('res-daily').textContent = dailyXP.toLocaleString();
+            document.getElementById('res-time').textContent = timeStr;
+            document.getElementById('res-date').textContent = dateStr;
+            
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        window.addEventListener('resize', () => {
+            dvdAnimations.forEach(anim => {
+                const rect = anim.element.getBoundingClientRect();
+                anim.x = Math.min(anim.x, window.innerWidth - rect.width);
+                anim.y = Math.min(anim.y, window.innerHeight - rect.height);
             });
-
-            osuContainer.appendChild(circle);
-            activeDots++;
-
-            // Автоудаление если не кликнули
-            setTimeout(() => {
-                if (circle.parentNode && !circle.classList.contains('hit')) {
-                    circle.remove();
-                    activeDots--;
-                    resetCombo();
-                }
-            }, approachTime * 1000);
-        }
-
-        function hitCircle(circle) {
-            if (circle.classList.contains('hit')) return;
-            circle.classList.add('hit');
-
-            // Эффект галочки
-            const effect = document.createElement('div');
-            effect.className = 'hit-effect';
-            effect.style.width = circle.offsetWidth + 'px';
-            effect.style.height = circle.offsetHeight + 'px';
-            circle.appendChild(effect);
-
-            setTimeout(() => effect.remove(), 300);
-
-            // Удаляем круг
-            setTimeout(() => {
-                circle.remove();
-                activeDots--;
-            }, 150);
-
-            // Combo
-            addCombo();
-        }
-
-        function addCombo() {
-            combo++;
-            comboEl.textContent = `combo x${combo}`;
-            comboEl.classList.add('show');
-            comboEl.classList.remove('bump');
-            void comboEl.offsetWidth;
-            comboEl.classList.add('bump');
-        }
-
-        function resetCombo() {
-            combo = 0;
-            comboEl.classList.remove('show');
-        }
-
-        /* ——— Настройки ——— */
-        speedSlider.addEventListener('input', () => {
-            const val = +speedSlider.value;
-            baseSpeed = 420 - val;
-            speedValue.textContent = Math.round((val / 400) * 100);
-            clearInterval(spawnInterval);
-            spawnInterval = setInterval(createOsuCircle, baseSpeed);
-        });
-
-        sizeSlider.addEventListener('input', () => {
-            baseSize = +sizeSlider.value;
-            sizeValue.textContent = baseSize;
         });
     </script>
 </body>
