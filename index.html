@@ -20,7 +20,6 @@
             cursor: none;
         }
 
-        /* 🔵 Курсор */
         .cursor-dot {
             position: fixed; width: 8px; height: 8px; background: #fff; border-radius: 50%;
             transform: translate(-50%, -50%); z-index: 9999; pointer-events: none;
@@ -32,7 +31,6 @@
             transition: width 0.1s, height 0.1s, border-color 0.1s;
         }
 
-        /* 🎬 Главный контейнер - ЦЕНТР */
         .main-container {
             position: absolute; 
             inset: 0; 
@@ -40,16 +38,15 @@
             flex-direction: column;
             justify-content: center; 
             align-items: center; 
-            gap: 25px;  /* ССЫЛКИ БЛИЖЕ К DSANC */
+            gap: 25px;  
             z-index: 100;
             transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         .main-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* 🖤 DSANC с шрифтом и RGB - БОЛЬШЕ */
         .text-wrapper {
             display: flex; 
-            font-size: clamp(4rem, 15vw, 10rem);  /* УВЕЛИЧИЛ DSANC */
+            font-size: clamp(4rem, 15vw, 10rem);
             font-weight: 700;
             letter-spacing: 0.08em; 
             cursor: none; 
@@ -80,7 +77,6 @@
         @keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
         @keyframes rgbFlow { 0% { background-position: 0% 50%; } 100% { background-position: 400% 50%; } }
 
-        /* 🔗 Социальные ссылки - ЦЕНТР */
         .social-links { 
             display: flex; 
             gap: 25px; 
@@ -139,7 +135,6 @@
         }
         .social-link:hover .tooltip { opacity: 1; transform: translateY(0); }
 
-        /* 🎮 DVD Bouncing Animation - BACKGROUND */
         .dvd-bounce {
             position: fixed;
             font-family: 'Courier New', Courier, monospace;
@@ -161,7 +156,6 @@
         .dvd-bounce.color-5 { color: #f00; text-shadow: 0 0 10px #f00, 0 0 20px #f00; }
         .dvd-bounce.color-6 { color: #00f; text-shadow: 0 0 10px #00f, 0 0 20px #00f; }
 
-        /* 🧮 Калькулятор медалей - ЦЕНТР */
         .calculator-container {
             position: fixed;
             inset: 0;
@@ -186,9 +180,9 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
             padding: 24px;
-            max-width: 650px;
+            max-width: 700px;
             width: 100%;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             position: relative;
@@ -251,7 +245,6 @@
             border-color: transparent;
             background: rgba(255,255,255,0.06);
         }
-        /* 🔥 МЕДЛЕННЫЙ RGB ДЛЯ КРЕСТИКА */
         .medal-option input#curr-0:checked + label.none-label {
             animation: slowRgb 10s linear infinite;
         }
@@ -268,6 +261,56 @@
             border-color: rgba(255,255,255,0.35);
             transform: translateY(-2px);
             background: rgba(255,255,255,0.04);
+        }
+
+        .current-xp-display {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        .xp-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        .xp-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 4px 0;
+        }
+        .xp-progress {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+        .xp-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .xp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #00ffff, #0088ff, #ff00ff, #ff0000);
+            background-size: 400% 100%;
+            animation: slowRgbBar 10s linear infinite;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        @keyframes slowRgbBar {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 400% 50%; }
         }
 
         .input-grid {
@@ -300,25 +343,43 @@
             border-color: rgba(255,255,255,0.35);
             background: rgba(255,255,255,0.08);
         }
-        .input-field input[type="date"] {
-            padding: 9px 12px;
+        .input-field input:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
 
-        .checkbox-field {
+        .mode-select, .strategy-select {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 4px;
+            gap: 10px;
+            margin: 10px 0 18px;
         }
-        .checkbox-field input {
-            width: 16px;
-            height: 16px;
-            accent-color: #fff;
-        }
-        .checkbox-field label {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.75);
+        .mode-btn, .strategy-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            color: #fff;
+            font-size: 0.85rem;
             cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .mode-btn.active, .strategy-btn.active {
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+            font-weight: 600;
+        }
+        .mode-btn:hover, .strategy-btn:hover {
+            border-color: rgba(255,255,255,0.4);
+        }
+        .strategy-btn.active.hardcore {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.2);
+        }
+        .strategy-btn.active.smart {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.2);
         }
 
         .calc-buttons {
@@ -392,6 +453,38 @@
             margin-top: 4px;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
+        .result-row.warning {
+            color: #fbbf24;
+        }
+        .result-note {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        .strategy-output {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border-left: 3px solid;
+        }
+        .strategy-output.hardcore {
+            border-left-color: #f59e0b;
+        }
+        .strategy-output.smart {
+            border-left-color: #10b981;
+        }
+        .strategy-output h4 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .strategy-output p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            margin: 4px 0;
+        }
 
         .error {
             color: #f87171;
@@ -407,7 +500,6 @@
         }
         @keyframes flashAnim { 0% { opacity: 1; } 100% { opacity: 0; } }
 
-        /* ➕ КНОПКА ДОБАВЛЕНИЯ С ПОСТОЯННЫМ ТУСКЛЫМ RGB */
         .add-dvd-btn {
             position: fixed;
             bottom: 25px;
@@ -429,7 +521,6 @@
             pointer-events: auto;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.1);
             overflow: hidden;
-            /* ПОСТОЯННЫЙ ТУСКЛЫЙ RGB ФОН */
             animation: dimRgb 8s linear infinite;
         }
         
@@ -491,6 +582,7 @@
             .calc-wrapper { padding: 20px 16px; }
             .dvd-bounce { font-size: 12px; }
             .add-dvd-btn { width: 50px; height: 50px; font-size: 28px; bottom: 20px; right: 20px; }
+            .mode-select, .strategy-select { flex-direction: column; }
         }
     </style>
 </head>
@@ -499,18 +591,14 @@
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-ring" id="cursor-ring"></div>
 
-    <!-- 🔊 Кастомный звук -->
     <audio id="my-sound" src="click.mp3" preload="auto"></audio>
 
-    <!-- 🎮 DVD Bouncing Animation Container -->
     <div id="dvd-container"></div>
 
-    <!-- ➕ КНОПКА ДОБАВЛЕНИЯ -->
     <button class="add-dvd-btn" id="addDvdBtn">
-        <span>+</span>
+        <span>^·^</span>
     </button>
 
-    <!-- 🎬 DSANC и ссылки - ЦЕНТР -->
     <div class="main-container" id="main-container">
         <div class="text-wrapper" id="text-wrapper">
             <span class="letter">D</span>
@@ -520,7 +608,6 @@
             <span class="letter">C</span>
         </div>
 
-        <!-- 🔗 Социальные ссылки - только YouTube и Discord -->
         <div class="social-links">
             <a href="https://youtube.com/@hif" target="_blank" class="social-link youtube">
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
@@ -533,12 +620,11 @@
         </div>
     </div>
 
-    <!-- 🧮 Калькулятор медалей -->
     <div class="calculator-container" id="calculator">
         <div class="calc-wrapper">
-            <h2 class="calc-title">CS2 Калькулятор</h2>
+            <h2 class="calc-title">CS2 Калькич</h2>
 
-            <div class="section-title">Current Medal</div>
+            <div class="section-title">Текущая медаль</div>
             <div class="medal-row">
                 <div class="medal-option">
                     <input type="radio" id="curr-0" name="current" value="0" checked>
@@ -566,10 +652,10 @@
                 </div>
             </div>
 
-            <div class="section-title">Target Medal</div>
+            <div class="section-title">Целевая медаль</div>
             <div class="medal-row">
                 <div class="medal-option">
-                    <input type="radio" id="targ-1" name="target" value="1" checked>
+                    <input type="radio" id="targ-1" name="target" value="1">
                     <label for="targ-1"><img src="https://static.wikia.nocookie.net/cswikia/images/f/f3/Service_medal_2026_lvl1.png/revision/latest?cb=20260123173658" alt="T1"></label>
                 </div>
                 <div class="medal-option">
@@ -594,54 +680,69 @@
                 </div>
             </div>
 
-            <div class="section-title">Your Progress</div>
+            <div class="current-xp-display" id="xpDisplay" style="display: none;">
+                <div class="xp-label">Текущий XP</div>
+                <div class="xp-value" id="currentXPValue">0</div>
+                <div class="xp-progress" id="xpProgress">до целевой медали: 0 XP</div>
+                <div class="xp-bar">
+                    <div class="xp-bar-fill" id="xpBarFill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="section-title">Прогресс</div>
             <div class="input-grid">
                 <div class="input-field">
-                    <label for="startLevel">Current Level</label>
+                    <label for="startLevel">Уровень профиля</label>
                     <input type="number" id="startLevel" min="1" max="40" value="1">
                 </div>
                 <div class="input-field">
-                    <label for="startXP">Current XP</label>
+                    <label for="startXP">XP в текущем уровне</label>
                     <input type="number" id="startXP" min="0" max="4999" value="0">
                 </div>
+            </div>
+
+            <div class="section-title">Режим прокачки</div>
+            <div class="mode-select">
+                <div class="mode-btn active" data-mode="casual" onclick="setMode('casual')">Обычный (Casual)</div>
+                <div class="mode-btn" data-mode="dm" onclick="setMode('dm')">Бой насмерть (DM)</div>
+            </div>
+
+            <div class="section-title">Стратегия фарма</div>
+            <div class="strategy-select">
+                <div class="strategy-btn active hardcore" data-strategy="hardcore" onclick="setStrategy('hardcore')">Без остановки</div>
+                <div class="strategy-btn smart" data-strategy="smart" onclick="setStrategy('smart')">До пониженного</div>
+            </div>
+
+            <div class="input-grid">
                 <div class="input-field">
-                    <label for="startDate">Start Date</label>
-                    <input type="date" id="startDate">
+                    <label for="avgScore">Очков за матч (Score)</label>
+                    <input type="number" id="avgScore" min="1" value="100">
+                    <div class="error" id="err-score"></div>
                 </div>
                 <div class="input-field">
-                    <label for="endDate">End Date</label>
-                    <input type="date" id="endDate">
-                    <div class="error" id="err-date"></div>
+                    <label for="matchDuration">Время матча (минут)</label>
+                    <input type="number" id="matchDuration" min="5" max="60" value="15">
                 </div>
                 <div class="input-field">
-                    <label for="avgDM">Avg DM Score</label>
-                    <input type="number" id="avgDM" min="1" value="600">
-                    <div class="checkbox-field">
-                        <input type="checkbox" id="useDM" checked>
-                        <label for="useDM">Include DM XP</label>
-                    </div>
-                </div>
-                <div class="input-field">
-                    <label for="avgMission">Avg Mission XP/Week</label>
-                    <input type="number" id="avgMission" min="0" value="450">
-                    <div class="checkbox-field">
-                        <input type="checkbox" id="useMission" checked>
-                        <label for="useMission">Include Missions</label>
-                    </div>
+                    <label for="targetXP">Сколько XP нужно (цель)</label>
+                    <input type="number" id="targetXP" min="1000" value="5000">
                 </div>
             </div>
 
             <div class="calc-buttons">
-                <button class="btn btn-calc" onclick="calculateMedal()">Calculate</button>
-                <button class="btn btn-reset" onclick="closeCalculator()">Close</button>
+                <button class="btn btn-calc" onclick="calculateMedal()">Рассчитать</button>
+                <button class="btn btn-reset" onclick="closeCalculator()">Закрыть</button>
             </div>
 
             <div class="results" id="results">
-                <div class="result-row"><span>Total XP Needed:</span><span class="value" id="res-total">0</span></div>
-                <div class="result-row"><span>Weekly Reduced XP:</span><span class="value" id="res-reduced">0</span></div>
-                <div class="result-row"><span>Daily XP Needed:</span><span class="value" id="res-daily">0</span></div>
-                <div class="result-row"><span>Daily Playtime:</span><span class="value" id="res-time">0 min</span></div>
-                <div class="result-row highlight"><span>Target Date:</span><span class="value" id="res-date">-</span></div>
+                <div class="result-row"><span>Текущий XP:</span><span class="value" id="res-current-xp">0</span></div>
+                <div class="result-row"><span>Нужно XP:</span><span class="value" id="res-total">0</span></div>
+                <div class="result-row"><span>XP за матч (норма):</span><span class="value" id="res-per-match">0</span></div>
+                <div class="result-row warning"><span>XP за матч (пониженный):</span><span class="value" id="res-penalty">0</span></div>
+                
+                <div id="strategyResults"></div>
+                
+                <div class="result-note" id="res-note"></div>
             </div>
         </div>
     </div>
@@ -655,7 +756,6 @@
         const dvdContainer = document.getElementById('dvd-container');
         const addDvdBtn = document.getElementById('addDvdBtn');
 
-        // 🔥 ОРИГИНАЛЬНЫЕ СМАЙЛИКИ
         const dvdFrames = [
             '(\\^·^)\\',
             '/(^·^)\\',
@@ -668,6 +768,8 @@
         ];
         
         const dvdAnimations = [];
+        let currentMode = 'casual';
+        let currentStrategy = 'hardcore';
 
         class DVDAnimation {
             constructor() {
@@ -740,33 +842,205 @@
 
         dvdAnimations.push(new DVDAnimation());
 
-        // Кнопка добавления
         addDvdBtn.addEventListener('click', () => {
             playClickSound();
             dvdAnimations.push(new DVDAnimation());
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            const today = new Date();
-            const endOfYear = new Date(today.getFullYear(), 11, 31);
-            
-            const formatDate = (date) => {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            };
-            
-            document.getElementById('startDate').value = formatDate(today);
-            document.getElementById('endDate').value = formatDate(endOfYear);
+            document.querySelectorAll('input[name="current"], input[name="target"], #startLevel, #startXP').forEach(el => {
+                el.addEventListener('change', updateXPDisplay);
+            });
         });
 
-        const medalXP = [0, 45000, 105000, 180000, 270000, 375000, 500000];
+        const XP_PER_LEVEL = 5000;
+        const XP_TO_RANK40 = 195000;
+        const MAX_XP = 1170000;
+        const MEDAL_XP = [0, 195000, 390000, 585000, 780000, 975000, 1170000];
+        const WEEKLY_THRESHOLD = 11166;
+        const WEEKLY_HOURS_LIMIT = 40;
+
+        const MODE_CONFIG = {
+            casual: { mult: 4.0, penaltyMult: 0.7, cap: Infinity, penaltyCap: Infinity, name: 'Обычный' },
+            dm: { mult: 0.2, penaltyMult: 0.035, cap: 75, penaltyCap: 13, name: 'Deathmatch' }
+        };
 
         function playClickSound() {
             const sound = document.getElementById('my-sound');
             sound.currentTime = 0;
             sound.play().catch(e => console.log('Audio error:', e));
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.mode-btn[data-mode="${mode}"]`).classList.add('active');
+            
+            const scoreInput = document.getElementById('avgScore');
+            
+            if (mode === 'dm') {
+                scoreInput.max = 375;
+                scoreInput.value = Math.min(parseInt(scoreInput.value) || 100, 375);
+            } else {
+                scoreInput.max = 9999;
+            }
+        }
+
+        function setStrategy(strategy) {
+            currentStrategy = strategy;
+            document.querySelectorAll('.strategy-btn').forEach(btn => {
+                btn.classList.remove('active', 'hardcore', 'smart');
+            });
+            document.querySelector(`.strategy-btn[data-strategy="${strategy}"]`).classList.add('active', strategy);
+            
+            // Отключаем поле XP если выбрана стратегия "До пониженного"
+            const targetXPInput = document.getElementById('targetXP');
+            if (strategy === 'smart') {
+                targetXPInput.disabled = true;
+                targetXPInput.value = WEEKLY_THRESHOLD;
+            } else {
+                targetXPInput.disabled = false;
+            }
+        }
+
+        function getCurrentXP() {
+            const currMedal = parseInt(document.querySelector('input[name="current"]:checked').value);
+            const startLevel = parseInt(document.getElementById('startLevel').value) || 1;
+            const startXP = parseInt(document.getElementById('startXP').value) || 0;
+            
+            const profileXP = (startLevel - 1) * XP_PER_LEVEL + startXP;
+            const totalXP = MEDAL_XP[currMedal] + Math.min(profileXP, XP_TO_RANK40);
+            
+            return {
+                total: totalXP,
+                medal: currMedal,
+                nextMedal: currMedal < 6 ? MEDAL_XP[currMedal + 1] : null,
+                toNextMedal: currMedal < 6 ? MEDAL_XP[currMedal + 1] - totalXP : 0
+            };
+        }
+
+        function calculateXPPerMatch(score, mode, penalized) {
+            const cfg = MODE_CONFIG[mode];
+            
+            if (mode === 'dm') {
+                if (penalized) {
+                    return Math.min(Math.floor(score * cfg.penaltyMult), cfg.penaltyCap);
+                } else {
+                    return Math.min(Math.floor(score * cfg.mult), cfg.cap);
+                }
+            } else if (mode === 'casual') {
+                if (penalized) {
+                    return Math.round(score * cfg.penaltyMult);
+                } else {
+                    return Math.round(score * cfg.mult);
+                }
+            }
+            return 0;
+        }
+
+        // Стратегия 1: Фарм БЕЗ ОСТАНОВКИ
+        function calculateHardcoreFarm(neededXP, avgScore, mode, matchDuration) {
+            let accumulatedXP = 0;
+            let totalMatches = 0;
+            let totalTimeMinutes = 0;
+            let weeklyBaseXPEarned = 0;
+
+            while (accumulatedXP < neededXP) {
+                let isPenalized = weeklyBaseXPEarned >= WEEKLY_THRESHOLD;
+                let xpGained = calculateXPPerMatch(avgScore, mode, isPenalized);
+                
+                accumulatedXP += xpGained;
+                totalMatches++;
+                totalTimeMinutes += matchDuration;
+
+                if (isPenalized) {
+                    weeklyBaseXPEarned += (xpGained / 0.175);
+                } else {
+                    weeklyBaseXPEarned += xpGained;
+                }
+
+                if (totalTimeMinutes % (WEEKLY_HOURS_LIMIT * 60) < matchDuration) {
+                    weeklyBaseXPEarned = 0;
+                }
+            }
+
+            return {
+                matches: totalMatches,
+                hours: (totalTimeMinutes / 60).toFixed(1),
+                weeks: Math.ceil(totalTimeMinutes / (WEEKLY_HOURS_LIMIT * 60))
+            };
+        }
+
+        // Стратегия 2: Фарм ТОЛЬКО ДО ПОНИЖЕННОГО
+        function calculateSmartFarm(neededXP, avgScore, mode, matchDuration) {
+            let accumulatedXP = 0;
+            let totalMatches = 0;
+            let totalTimeMinutes = 0;
+            let weeksRequired = 0;
+
+            const xpPerNormalMatch = calculateXPPerMatch(avgScore, mode, false);
+            
+            if (xpPerNormalMatch <= 0) return { matches: Infinity, hours: Infinity, weeks: Infinity };
+
+            const matchesPerWeek = Math.ceil(WEEKLY_THRESHOLD / xpPerNormalMatch);
+            const xpPerWeek = matchesPerWeek * xpPerNormalMatch;
+
+            while (accumulatedXP < neededXP) {
+                weeksRequired++;
+                
+                const remainingXP = neededXP - accumulatedXP;
+                if (remainingXP <= xpPerWeek) {
+                    const finalMatches = Math.ceil(remainingXP / xpPerNormalMatch);
+                    totalMatches += finalMatches;
+                    totalTimeMinutes += finalMatches * matchDuration;
+                    accumulatedXP += finalMatches * xpPerNormalMatch;
+                    break;
+                }
+
+                totalMatches += matchesPerWeek;
+                totalTimeMinutes += matchesPerWeek * matchDuration;
+                accumulatedXP += xpPerWeek;
+            }
+
+            return {
+                matches: totalMatches,
+                hours: (totalTimeMinutes / 60).toFixed(1),
+                weeks: weeksRequired
+            };
+        }
+
+        function updateXPDisplay() {
+            const currentRadio = document.querySelector('input[name="current"]:checked');
+            const targetRadio = document.querySelector('input[name="target"]:checked');
+            
+            if (!currentRadio || !targetRadio) return;
+            
+            const currMedal = parseInt(currentRadio.value);
+            const targetMedal = parseInt(targetRadio.value);
+            
+            if (currMedal === targetMedal) return;
+            
+            const xpData = getCurrentXP();
+            
+            const xpDisplay = document.getElementById('xpDisplay');
+            const xpValue = document.getElementById('currentXPValue');
+            const xpProgress = document.getElementById('xpProgress');
+            const xpBarFill = document.getElementById('xpBarFill');
+            
+            const targetXP = MEDAL_XP[targetMedal];
+            const xpNeeded = Math.max(0, targetXP - xpData.total);
+            const progress = (xpData.total / MAX_XP) * 100;
+            
+            xpDisplay.style.display = 'block';
+            xpValue.textContent = xpData.total.toLocaleString('ru-RU') + ' XP';
+            
+            if (xpNeeded > 0) {
+                xpProgress.textContent = `до ${targetMedal} медали: ${xpNeeded.toLocaleString('ru-RU')} XP`;
+            } else {
+                xpProgress.textContent = `максимальная медаль достигнута`;
+            }
+            
+            xpBarFill.style.width = Math.min(progress, 100) + '%';
         }
 
         document.addEventListener('mousemove', e => {
@@ -797,6 +1071,7 @@
             mainContainer.classList.add('hidden');
             setTimeout(() => {
                 calculator.classList.add('show');
+                updateXPDisplay();
             }, 300);
         });
 
@@ -809,60 +1084,89 @@
         function calculateMedal() {
             document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
 
-            const currMedal = parseInt(document.querySelector('input[name="current"]:checked').value);
-            const targetMedal = parseInt(document.querySelector('input[name="target"]:checked').value);
+            const currentRadio = document.querySelector('input[name="current"]:checked');
+            const targetRadio = document.querySelector('input[name="target"]:checked');
+            
+            if (!currentRadio || !targetRadio) {
+                alert('Выберите текущую и целевую медаль!');
+                return;
+            }
+
+            const currMedal = parseInt(currentRadio.value);
+            const targetMedal = parseInt(targetRadio.value);
             const startLevel = parseInt(document.getElementById('startLevel').value) || 1;
             const startXP = parseInt(document.getElementById('startXP').value) || 0;
-            const startDate = new Date(document.getElementById('startDate').value);
-            const endDate = new Date(document.getElementById('endDate').value);
-            const avgDM = parseInt(document.getElementById('avgDM').value) || 600;
-            const avgMission = parseInt(document.getElementById('avgMission').value) || 450;
-            const useDM = document.getElementById('useDM').checked;
-            const useMission = document.getElementById('useMission').checked;
+            const avgScore = parseInt(document.getElementById('avgScore').value) || 100;
+            const matchDuration = parseInt(document.getElementById('matchDuration').value) || 15;
+            const targetXPInput = parseInt(document.getElementById('targetXP').value) || 0;
 
-            let valid = true;
-            if (endDate <= startDate) {
-                document.getElementById('err-date').textContent = 'End > Start';
-                document.getElementById('err-date').classList.add('show');
-                valid = false;
+            if (currentMode === 'dm' && avgScore > 375) {
+                document.getElementById('err-score').textContent = 'В ДМ максимум 375 очков имеет смысл';
+                document.getElementById('err-score').classList.add('show');
+                return;
             }
-            if (targetMedal <= currMedal) {
-                alert('Target must be higher than current!');
-                valid = false;
+
+            if (targetMedal <= currMedal && targetXPInput === 0) {
+                alert('Выберите медаль выше текущей или укажите количество XP!');
+                return;
             }
-            if (!valid) return;
 
-            const currentTotalXP = (startLevel - 1) * 5000 + startXP + medalXP[currMedal];
-            const targetTotalXP = medalXP[targetMedal];
-            const xpNeeded = Math.max(0, targetTotalXP - currentTotalXP);
+            const currentProfileXP = (startLevel - 1) * XP_PER_LEVEL + startXP;
+            const currentTotalXP = MEDAL_XP[currMedal] + Math.min(currentProfileXP, XP_TO_RANK40);
+            
+            let xpNeeded = 0;
+            if (currentStrategy === 'smart') {
+                
+                xpNeeded = WEEKLY_THRESHOLD;
+            } else if (targetXPInput > 0) {
+                xpNeeded = targetXPInput;
+            } else {
+                xpNeeded = Math.max(0, MEDAL_XP[targetMedal] - currentTotalXP);
+            }
 
-            const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-            const weeks = Math.ceil(days / 7);
-            const baseWeeklyXP = 12000;
-            const reducedXP = Math.max(0, baseWeeklyXP * 0.3 * weeks);
+            const xpNormal = calculateXPPerMatch(avgScore, currentMode, false);
+            const xpPenalty = calculateXPPerMatch(avgScore, currentMode, true);
+            
+            
+            const hardcoreResults = calculateHardcoreFarm(xpNeeded, avgScore, currentMode, matchDuration);
+            const smartResults = calculateSmartFarm(xpNeeded, avgScore, currentMode, matchDuration);
 
-            const effectiveXP = xpNeeded + reducedXP;
-            const dailyXP = Math.ceil(effectiveXP / days);
+            let note = '';
+            if (currentMode === 'dm') {
+                note = `⚠️ В ДМ после 11,166 XP/неделю вы будете получать всего ${xpPenalty} XP за матч. На пониженном опыте фарм крайне неэффективен.`;
+            } else {
+                note = `⚠️ После 11,166 XP/неделю множитель снижается до ×0.175. При счёте ${avgScore} вы получаете ${xpNormal} XP до лимита и только ${xpPenalty} XP после.`;
+            }
 
-            const xpPerMin = useDM ? (avgDM / 10) : 30;
-            const missionBonus = useMission ? avgMission / 7 : 0;
-            const netDailyXP = Math.max(1, dailyXP - missionBonus);
-            const minutesPerDay = Math.ceil(netDailyXP / xpPerMin);
-
-            let timeStr = '';
-            if (minutesPerDay < 60) timeStr = `${minutesPerDay} min/day`;
-            else if (minutesPerDay < 120) timeStr = `${(minutesPerDay/60).toFixed(1)} h/day`;
-            else timeStr = `${Math.floor(minutesPerDay/60)}h ${minutesPerDay%60}m/day`;
-
-            const targetDate = new Date(startDate);
-            targetDate.setDate(targetDate.getDate() + days);
-            const dateStr = targetDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-
-            document.getElementById('res-total').textContent = xpNeeded.toLocaleString();
-            document.getElementById('res-reduced').textContent = Math.round(reducedXP).toLocaleString();
-            document.getElementById('res-daily').textContent = dailyXP.toLocaleString();
-            document.getElementById('res-time').textContent = timeStr;
-            document.getElementById('res-date').textContent = dateStr;
+            document.getElementById('res-current-xp').textContent = currentTotalXP.toLocaleString('ru-RU') + ' XP';
+            document.getElementById('res-total').textContent = xpNeeded.toLocaleString('ru-RU') + ' XP';
+            document.getElementById('res-per-match').textContent = xpNormal + ' XP';
+            document.getElementById('res-penalty').textContent = xpPenalty + ' XP';
+            
+            
+            const strategyResults = document.getElementById('strategyResults');
+            
+            if (currentStrategy === 'hardcore') {
+                strategyResults.innerHTML = `
+                    <div class="strategy-output hardcore">
+                        <h4>Итог:</h4>
+                        <p><strong>Матчей:</strong> ${hardcoreResults.matches}</p>
+                        <p><strong>Времени игры:</strong> ${hardcoreResults.hours} ч.</p>
+                        <p><strong>Игровых недель:</strong> ${hardcoreResults.weeks} (по ${WEEKLY_HOURS_LIMIT}ч/нед)</p>
+                    </div>
+                `;
+            } else {
+                strategyResults.innerHTML = `
+                    <div class="strategy-output smart">
+                        <h4>Итог:</h4>
+                        <p><strong>Матчей:</strong> ${smartResults.matches}</p>
+                        <p><strong>Чистого времени игры:</strong> ${smartResults.hours} ч.</p>
+                        <p><strong>Пройдет реального времени:</strong> ${smartResults.weeks} нед. (до среды)</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('res-note').textContent = note;
             
             document.getElementById('results').classList.add('show');
             document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
